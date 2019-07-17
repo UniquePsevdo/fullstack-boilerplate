@@ -6,8 +6,10 @@ import {
   PROTECTED_FALLBACK_PAGE_URI
 } from 'ngx-auth';
 
-import { TokenStorage } from '../../core/services/token-storage.service';
-import { AuthenticationService } from '../../core/services/authentication.service';
+import { TokenStorage } from '../core/services/token-storage.service';
+import { AuthenticationService } from '../core/services/authentication.service';
+
+import { LoginComponent } from './components/login/login.component';
 
 export function factory(authenticationService: AuthenticationService) {
   return authenticationService;
@@ -26,6 +28,6 @@ export function factory(authenticationService: AuthenticationService) {
       useFactory: factory
     }
   ],
-  declarations: []
+  declarations: [ LoginComponent ]
 })
 export class AuthenticationModule {}

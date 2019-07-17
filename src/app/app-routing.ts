@@ -24,7 +24,7 @@ export const routes: Routes = [
   {
     path: 'login',
     /*canActivate: [ PublicGuard ],*/
-    loadChildren: () => import('./+login/login.module').then(m => m.LoginModule),
+    loadChildren: () => import('./+auth/authentication.module').then(m => m.AuthenticationModule),
   },
   {
     path: '404',
