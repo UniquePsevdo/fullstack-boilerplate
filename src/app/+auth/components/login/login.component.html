@@ -1,3 +1,75 @@
-<p>
-  login works!
-</p>
+<div fxLayout="row" fxLayoutAlign="center">
+  <mat-card class="login-form-card">
+    <mat-card-header fxLayout="row" fxLayoutAlign="center">
+      <mat-card-title fxLayout="row" fxLayoutAlign="center">Login</mat-card-title>
+      <mat-card-subtitle fxLayout="row" fxLayoutAlign="center">Hello! Log in with your email.</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content fxLayout="row" fxLayoutAlign="center">
+      <form [formGroup]="loginForm" (ngSubmit)="submit()" class="login-form">
+        <mat-form-field class="input-full-width">
+          <input matInput placeholder="email address"
+                 [type]="'email'">
+        </mat-form-field>
+
+        <mat-form-field class="input-full-width">
+          <input matInput placeholder="password"
+                 [type]="'password'">
+        </mat-form-field>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>
+
+  <!--
+<form (ngSubmit)="login()" autocomplete="on" [formGroup]="userForm">
+  <div *ngIf="errors && errors.length > 0 && !submitted"
+       class="alert alert-danger" role="alert">
+    <div><strong>Oh snap!</strong></div>
+    <div *ngFor="let error of errors">{{ error }}</div>
+  </div>
+  <div class="form-group">
+    <label for="input-email" class="sr-only">Email address</label>
+    <input name="email" formControlName="email" id="input-email"
+           pattern="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?"
+           class="form-control" placeholder="Email address"
+           [class.form-control-danger]="userForm.controls.email.invalid && userForm.controls.email.touched" autofocus
+           [required]="true">
+    <small id="error-email-required" class="form-text error"
+           *ngIf="userForm.controls.email.invalid && userForm.controls.email.touched && userForm.controls.email.errors?.required">
+      Email is required!
+    </small>
+    <small id="error-email-pattern" class="form-text error"
+           *ngIf="userForm.controls.email.invalid && userForm.controls.email.touched && userForm.controls.email.errors?.pattern">
+      Email should be a real one!
+    </small>
+  </div>
+  <div class="form-group">
+    <label for="input-password" class="sr-only">Password</label>
+    <input name="password" formControlName="password" type="password" id="input-password"
+           class="form-control" placeholder="Password"
+           [class.form-control-danger]="userForm.controls.password.invalid && userForm.controls.password.touched"
+           [required]="true">
+    <small id="error-password" class="form-text error"
+           *ngIf="userForm.controls.password.invalid && userForm.controls.password.touched && userForm.controls.password.errors?.required">
+      Password is required!
+    </small>
+  </div>
+  <div class="form-group">
+    <button [disabled]="submitted || !userForm.valid" class="btn btn-block btn-hero-success"
+            [class.btn-pulse]="submitted">
+      Sign In
+    </button>
+  </div>
+  <div class="row">
+    <div class="col-xl-12 col-md-6 col-sm-12 form-group">
+      <button type="button" class="btn btn-block btn-secondary" (click)="loginAdmin()">
+        Admin Sign In
+      </button>
+    </div>
+    <div class="col-xl-12 col-md-6 col-sm-12">
+      <button type="button" class="btn btn-block btn-secondary" (click)="loginManager()">
+        Manager Sign In
+      </button>
+    </div>
+  </div>
+</form>-->

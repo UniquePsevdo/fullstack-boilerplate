@@ -6,6 +6,16 @@ import { NotFoundComponent } from './shared/components/not-found/not-found.compo
 
 export const routes: Routes = [
   {
+    path: 'login',
+    children: [
+      {
+        path: '',
+        /*canActivate: [ PublicGuard ],*/
+        loadChildren: () => import('./+auth/auth.module').then(m => m.AuthenticationModule),
+      }
+    ],
+  },
+  {
     path: '',
     redirectTo: 'task',
     pathMatch: 'full'
@@ -20,11 +30,6 @@ export const routes: Routes = [
       }
     ],
     component: LayoutComponent,
-  },
-  {
-    path: 'login',
-    /*canActivate: [ PublicGuard ],*/
-    loadChildren: () => import('./+auth/authentication.module').then(m => m.AuthenticationModule),
   },
   {
     path: '404',

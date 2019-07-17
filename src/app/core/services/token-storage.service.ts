@@ -5,27 +5,27 @@ import { Observable, of } from 'rxjs';
 export class TokenStorage {
 
   public getAccessToken(): Observable<string> {
-    const token: string = localStorage.getItem('accessToken');
+    const token: string = localStorage.getItem('access_token');
     return of(token);
   }
 
   public getRefreshToken(): Observable<string> {
-    const token: string = localStorage.getItem('refreshToken');
+    const token: string = localStorage.getItem('refresh_token');
     return of(token);
   }
 
   public setAccessToken(token: string): TokenStorage {
-    localStorage.setItem('accessToken', token);
+    localStorage.setItem('access_token', token);
     return this;
   }
 
   public setRefreshToken(token: string): TokenStorage {
-    localStorage.setItem('refreshToken', token);
+    localStorage.setItem('refresh_token', token);
     return this;
   }
 
   public clear() {
-    localStorage.removeItem('accessToken');
-    localStorage.removeItem('refreshToken');
+    localStorage.removeItem('access_token');
+    localStorage.removeItem('refresh_token');
   }
 }
