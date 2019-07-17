@@ -2,7 +2,6 @@ const express = require('express');
 const morgan = require('morgan');
 const bodyParser = require('body-parser');
 const compress = require('compression');
-const mongoose = require('mongoose');
 const cors = require('cors');
 const routes = require('./api/routes/v1');
 const { logs } = require('./config/vars');

@@ -5,6 +5,8 @@ const { db } = require('./backend/config/vars');
 const mongoose = require('mongoose');
 const connection = connect();
 
+mongoose.set('useCreateIndex', true);
+
 const normalizePort = val => {
   var port = parseInt(val, 10);
   if (isNaN(port)) {

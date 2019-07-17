@@ -1,24 +1,24 @@
 const User = require('../models/user');
-// const bcrypt = require('bcrypt');
-// const jwt = require('jwt-simple');
+const bcrypt = require('bcrypt');
+const jwt = require('jwt-simple');
 
 const { jwtExpirationInterval, jwtSecret } = require('../../config/vars');
 
-function tokenForUser(user) {
+function generateTokenForUser(user) {
   const timestamp = new Date().getTime();
   return jwt.encode({
     sub: user.id,
-    name: user.fullName,
+    name: user.name,
     iat: timestamp,
     exp: Math.round(Date.now() / 1000) + jwtExpirationInterval,
   }, jwtSecret);
 }
 
-function refreshTokenForUser(user) {
+function generateRefreshTokenForUser(user) {
   const timestamp = new Date().getTime();
   return jwt.encode({
     sub: user.id,
-    name: user.fullName,
+    name: user.name,
     iat: timestamp,
     exp: Math.round(Date.now() / 1000) + (jwtExpirationInterval * 2),
   }, jwtSecret);
@@ -26,60 +26,50 @@ function refreshTokenForUser(user) {
 
 module.exports = {
   register(req, res) {
-    const user = new User({
-      firstName: req.body.firstName,
-      lastName: req.body.lastName,
-    })
-    res.status(201).send('success!');
-    /*
-    User.create({
-      email: req.body.email,
-      password: req.body.password,
-      fullName: req.body.fullName,
-    })
-      .then((user) => {
-        return res.status(201).send({
-          token: {
-            access_token: tokenForUser(user),
-          },
+    bcrypt.hash(req.body.password, 10).then(hash => {
+        const user = new User({
+          name: req.body.name,
+          email: req.body.email,
+          password: hash,
         });
+        user.save().then((user)=>{
+          res.status(201).send(user);
+        })
+        .catch((err) => {
+          res.status(500).send(err);
+        })
       })
-      .catch(error => res.status(400).send(error));
-    */
   },
-  /*login(req, res) {
-    if (typeof req.body.email !== 'string' && typeof req.body.password !== 'string') {
-      return res.status(400).send();
-    }
-    User.findOne({
-      where: {
-        email: req.body.email,
-      },
-    })
+  login(req, res) {
+    User.findOne({email: req.body.email})
       .then((user) => {
-        if (!user || !bcrypt.compareSync(req.body.password, user.get('passwordHash'))) {
+        if (!user) {
           return res.status(401).send();
         }
-        res.status(201)
-          .send({
-            token: {
-              access_token: tokenForUser(req.user),
-              refresh_token: refreshTokenForUser(req.user),
-            },
-          });
+        return  bcrypt.compare(req.body.password, user.password)
+          .then((result) => {
+            if(result){
+              res.status(200).send({
+                  token: {
+                    access_token: generateTokenForUser(user),
+                    refresh_token: generateRefreshTokenForUser(user),
+                  }
+              });
+            }
+          })
       })
       .catch(error => res.status(500).send(error));
   },
   refresh(req, res) {
     if (req.user) {
-      res.status(201).send({
+      res.status(200).send({
         token: {
-          access_token: tokenForUser(req.user),
-          refresh_token: refreshTokenForUser(req.user),
+          access_token: generateTokenForUser(req.user),
+          refresh_token: generateRefreshTokenForUser(req.user),
         },
       });
     } else {
-      res.status(400).send();
+      res.status(401).send();
     }
-  },*/
+  },
 };
