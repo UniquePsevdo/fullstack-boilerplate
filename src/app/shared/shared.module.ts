@@ -4,6 +4,7 @@ import { RouterModule } from '@angular/router';
 import { MatInputModule, MatToolbarModule, MatCardModule, MatButtonModule } from '@angular/material';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { HttpClientModule } from '@angular/common/http';
 
 import { HeaderComponent } from './components/layout/header/header.component';
 import { FooterComponent } from './components/layout/footer/footer.component';
@@ -20,6 +21,7 @@ import { NotFoundComponent } from './components/not-found/not-found.component';
     MatCardModule,
     MatButtonModule,
     ReactiveFormsModule,
+    HttpClientModule,
   ],
   exports: [
     CommonModule,
@@ -30,6 +32,7 @@ import { NotFoundComponent } from './components/not-found/not-found.component';
     MatCardModule,
     MatButtonModule,
     ReactiveFormsModule,
+    HttpClientModule,
   ],
   declarations: [
     HeaderComponent,

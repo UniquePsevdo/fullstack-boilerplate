@@ -50,7 +50,7 @@ module.exports = {
           .then((result) => {
             if(result){
               res.status(200).send({
-                  token: {
+                  tokens: {
                     access_token: generateTokenForUser(user),
                     refresh_token: generateRefreshTokenForUser(user),
                   }

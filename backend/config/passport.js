@@ -5,6 +5,7 @@ const { jwtSecret } = require('../config/vars');
 const JwtBearerStrategy = require('passport-http-bearer').Strategy;
 const LocalStrategy = require('passport-local');
 const jwt = require('jwt-simple');
+const bcrypt = require('bcrypt');
 
 // create local strategy
 const localOptions = { usernameField: 'email' };
@@ -14,15 +15,13 @@ const Local = new LocalStrategy(localOptions, ((email, password, done) => {
       return done(null, false);
     }
     // compare passwords
-    user.comparePassword(password, (err, isMatch) => {
-      if (err) {
-        return done(err);
-      }
-      if (!isMatch) {
+    return  bcrypt.compare(password, user.password)
+      .then((result) => {
+        if(result){
+          return done(null, user);
+        }
         return done(null, false);
-      }
-      return done(null, user);
-    });
+      })
   }).catch((err) => {
     done(err);
   });

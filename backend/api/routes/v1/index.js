@@ -11,6 +11,6 @@ const requireAuth = passport.authenticate('bearer', { session: false });
 
 router.post('/user/register', userController.register);
 router.post('/user/login', requireSignin, userController.login);
-router.get('/user/refresh', requireAuth, userController.refresh);
+router.get('/token/refresh', requireAuth, userController.refresh);
 
 module.exports = router;

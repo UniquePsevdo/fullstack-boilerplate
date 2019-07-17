@@ -7,8 +7,10 @@ import { AuthService } from 'ngx-auth';
 import { TokenStorage } from './token-storage.service';
 
 interface AccessData {
-  accessToken: string;
-  refreshToken: string;
+  tokens: {
+    access_token: string;
+    refresh_token: string;
+  };
 }
 
 @Injectable()
@@ -34,9 +36,10 @@ export class AuthenticationService implements AuthService {
       .getRefreshToken()
       .pipe(
         switchMap((refreshToken: string) =>
-          this.http.post(`http://localhost:3000/refresh`, { refreshToken })
+          // todo: environment variable
+          this.http.post(`http://localhost:3000/api/v1/token/refresh`, { refreshToken })
         ),
-        tap((tokens: AccessData) => this.saveAccessData(tokens)),
+        tap((data: AccessData) => this.saveAccessData(data)),
         catchError((err) => {
           this.logout();
 
@@ -53,9 +56,10 @@ export class AuthenticationService implements AuthService {
     return url.endsWith('/refresh');
   }
 
-  public login(): Observable<any> {
-    return this.http.post(`http://localhost:3000/login`, { })
-      .pipe(tap((tokens: AccessData) => this.saveAccessData(tokens)));
+  public login(body: {email: string, password: string}): Observable<any> {
+    // todo: environment variable
+    return this.http.post(`http://localhost:3000/api/v1/user/login`, body)
+      .pipe(tap((data: AccessData) => this.saveAccessData(data)));
   }
 
   public logout(): void {
@@ -63,10 +67,10 @@ export class AuthenticationService implements AuthService {
     location.reload(true);
   }
 
-  private saveAccessData({ accessToken, refreshToken }: AccessData) {
+  private saveAccessData(data: AccessData) {
     this.tokenStorage
-      .setAccessToken(accessToken)
-      .setRefreshToken(refreshToken);
+      .setAccessToken(data.tokens.access_token)
+      .setRefreshToken(data.tokens.refresh_token);
   }
 
 }

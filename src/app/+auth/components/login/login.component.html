@@ -22,9 +22,14 @@
 
         <mat-form-field class="input-full-width">
           <input matInput placeholder="password"
+                 [formControl]="loginForm.controls.password"
+                 [errorStateMatcher]="matcher"
                  [type]="'password'">
+          <mat-error *ngIf="loginForm.controls.password.errors?.required">
+            Password is required
+          </mat-error>
         </mat-form-field>
-        <button class="login-form-submit-btn" mat-raised-button color="primary">Log In</button>
+        <button type="submit" class="login-form-submit-btn" mat-raised-button color="primary">Log In</button>
       </form>
     </mat-card-content>
   </mat-card>
