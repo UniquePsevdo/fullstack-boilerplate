@@ -1,17 +1,15 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-
+import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 
 import { TaskRoutingModule } from './task-routing.module';
 import { TaskListComponent } from './components/task-list/task-list.component';
 
 @NgModule({
   imports: [
-    CommonModule,
-    TaskRoutingModule
+    TaskRoutingModule,
+    NgxDatatableModule,
   ],
-  providers: [
-  ],
+  providers: [],
   declarations: [TaskListComponent]
 })
 export class TaskModule {}

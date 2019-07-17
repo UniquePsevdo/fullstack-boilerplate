@@ -35,7 +35,7 @@ export class AuthenticationService implements AuthService {
     return this.tokenStorage
       .getRefreshToken()
       .pipe(
-        switchMap((refreshToken: string) =>
+        switchMap(() =>
           // todo: environment variable
           this.http.get(`http://localhost:3000/api/v1/token/refresh`)
         ),
