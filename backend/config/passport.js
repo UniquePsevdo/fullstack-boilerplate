@@ -9,9 +9,6 @@ const jwt = require('jwt-simple');
 // create local strategy
 const localOptions = { usernameField: 'email' };
 const Local = new LocalStrategy(localOptions, ((email, password, done) => {
-  // verify this email and password, call done with the user
-  // if it is the correct email and password
-  // otherwise call done with false
   User.findOne({email}).then((user) => {
     if (!user) {
       return done(null, false);
@@ -54,5 +51,5 @@ const Bearer = new JwtBearerStrategy(((token, done) => {
   }
 }));
 
-passport.use(Bearer); // 'bearer' strategy
-passport.use(Local); // 'local' strategy
+passport.use(Bearer);
+passport.use(Local);
