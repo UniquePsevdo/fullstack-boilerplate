@@ -1,7 +1,9 @@
-const app = require("./backend/app");
-const debug = require("debug")("node-angular");
-const http = require("http");
-const logger = require("./backend/config/logger");
+const app = require('./backend/app');
+const http = require('http');
+const logger = require('./backend/config/logger');
+const { db } = require('./backend/config/vars');
+const mongoose = require('mongoose');
+const connection = connect();
 
 const normalizePort = val => {
   var port = parseInt(val, 10);
@@ -15,17 +17,17 @@ const normalizePort = val => {
 };
 
 const onError = error => {
-  if (error.syscall !== "listen") {
+  if (error.syscall !== 'listen') {
     throw error;
   }
-  const bind = typeof port === "string" ? "pipe " + port : "port " + port;
+  const bind = typeof port === 'string' ? 'pipe ' + port : 'port ' + port;
   switch (error.code) {
-    case "EACCES":
-      logger.error(bind + " requires elevated privileges");
+    case 'EACCES':
+      logger.error(`${bind} requires elevated privileges`);
       process.exit(1);
       break;
-    case "EADDRINUSE":
-      logger.error(bind + " is already in use");
+    case 'EADDRINUSE':
+      logger.error(`${bind} is already in use`);
       process.exit(1);
       break;
     default:
@@ -34,15 +36,27 @@ const onError = error => {
 };
 
 const onListening = () => {
-  const addr = server.address();
-  const bind = typeof port === "string" ? "pipe " + port : "port " + port;
-  debug("Listening on " + bind);
+  logger.info(`Express app started on port ${port}`);
 };
 
-const port = normalizePort(process.env.PORT || "3000");
-app.set("port", port);
+const port = normalizePort(process.env.PORT || '3000');
+app.set('port', port);
 
 const server = http.createServer(app);
-server.on("error", onError);
-server.on("listening", onListening);
-server.listen(port);
+server.on('error', onError);
+server.on('listening', onListening);
+
+connection
+  .on('error', logger.error)
+  .on('disconnected', connect)
+  .once('open', listen);
+
+function listen() {
+  server.listen(port);
+}
+
+function connect() {
+  var options = { keepAlive: 1, useNewUrlParser: true };
+  mongoose.connect(db, options);
+  return mongoose.connection;
+}

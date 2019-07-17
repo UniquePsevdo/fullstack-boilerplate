@@ -4,6 +4,8 @@ const express = require('express');
 // const passportConfig = require('../../../config/passport');
 
 const router = express.Router();
-// const userController = require('../../controllers').user;
+const userController = require('../../controllers').user;
+
+router.post('/user/register', userController.register);
 
 module.exports = router;

@@ -1,8 +1,8 @@
-const { User } = require('../models');
-const bcrypt = require('bcrypt');
-const jwt = require('jwt-simple');
+const User = require('../models/user');
+// const bcrypt = require('bcrypt');
+// const jwt = require('jwt-simple');
 
-// const { jwtExpirationInterval, jwtSecret } = require('../../config/vars');
+const { jwtExpirationInterval, jwtSecret } = require('../../config/vars');
 
 function tokenForUser(user) {
   const timestamp = new Date().getTime();
@@ -25,7 +25,13 @@ function refreshTokenForUser(user) {
 }
 
 module.exports = {
-  /*register(req, res) {
+  register(req, res) {
+    const user = new User({
+      firstName: req.body.firstName,
+      lastName: req.body.lastName,
+    })
+    res.status(201).send('success!');
+    /*
     User.create({
       email: req.body.email,
       password: req.body.password,
@@ -39,8 +45,9 @@ module.exports = {
         });
       })
       .catch(error => res.status(400).send(error));
+    */
   },
-  login(req, res) {
+  /*login(req, res) {
     if (typeof req.body.email !== 'string' && typeof req.body.password !== 'string') {
       return res.status(400).send();
     }
