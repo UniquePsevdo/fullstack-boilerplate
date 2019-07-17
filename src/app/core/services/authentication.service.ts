@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
 import { tap, map, switchMap, catchError } from 'rxjs/operators';
 import { AuthService } from 'ngx-auth';
 
@@ -37,13 +37,13 @@ export class AuthenticationService implements AuthService {
       .pipe(
         switchMap((refreshToken: string) =>
           // todo: environment variable
-          this.http.post(`http://localhost:3000/api/v1/token/refresh`, { refreshToken })
+          this.http.get(`http://localhost:3000/api/v1/token/refresh`)
         ),
         tap((data: AccessData) => this.saveAccessData(data)),
         catchError((err) => {
           this.logout();
 
-          return Observable.throw(err);
+          return throwError(err);
         })
       );
   }
@@ -64,7 +64,7 @@ export class AuthenticationService implements AuthService {
 
   public logout(): void {
     this.tokenStorage.clear();
-    location.reload(true);
+    location.reload();
   }
 
   private saveAccessData(data: AccessData) {
