@@ -6,6 +6,7 @@ import { AppComponent } from './app.component';
 import { CoreModule } from './core/core.module';
 import { SharedModule } from './shared/shared.module';
 import { AppRoutingModule } from './app-routing.module';
+import { TitleService } from './core/services/title-service';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,7 @@ import { AppRoutingModule } from './app-routing.module';
     SharedModule,
     AppRoutingModule,
   ],
-  providers: [],
+  providers: [TitleService],
   bootstrap: [ AppComponent ]
 })
 export class AppModule { }

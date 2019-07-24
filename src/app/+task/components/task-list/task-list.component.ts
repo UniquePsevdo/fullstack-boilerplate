@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { TitleService } from '../../../core/services/title-service';
 
 @Component({
   selector: 'app-task-list',
@@ -7,15 +8,19 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TaskListComponent implements OnInit {
   tasks = [
-    { description: 'Task 1', dueDate: Date.now(), id: 1 },
-    { description: 'Task 1', dueDate: Date.now(), id: 2 },
-    { description: 'Task 1', dueDate: Date.now(), id: 3 },
-    { description: 'Task 1', dueDate: Date.now(), id: 4 },
+    { description: 'Task 1', dueDate: Date.now(), actions: 1 },
+    { description: 'Task 2', dueDate: Date.now(), actions: 2 },
+    { description: 'Task 3', dueDate: Date.now(), actions: 3 },
+    { description: 'Task 4', dueDate: Date.now(), actions: 4 },
   ]
 
-  constructor() { }
+  constructor(private titleService: TitleService) {
+    this.titleService.setTitle('Task list');
+  }
 
   ngOnInit() {
   }
+
+  deleteTask(event, value) {}
 
 }

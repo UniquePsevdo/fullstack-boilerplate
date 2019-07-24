@@ -10,13 +10,11 @@
   <ngx-datatable-column prop="dueDate" [summaryFunc]="null"></ngx-datatable-column>
   <ngx-datatable-column prop="actions" [minWidth]="50" [width]="50">
     <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
-      <a nbButton class="actions-button" style="cursor: pointer;" status="primary"
-         [routerLink]="['/reports/view/', value]">
-        Info
-      </a>
-      <button nbButton class="actions-button" style="cursor: pointer;" status="danger"
-              (click)="deleteReport($event, value)">
-        <i class="nb-trash"></i>
+      <button class="actions-button" mat-raised-button color="primary" status="primary">
+        <mat-icon>edit</mat-icon>
+      </button>
+      <button class="actions-button" mat-raised-button color="warn" (click)="deleteTask($event, value)">
+        <mat-icon>delete</mat-icon>
       </button>
     </ng-template>
   </ngx-datatable-column>

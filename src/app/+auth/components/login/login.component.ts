@@ -19,7 +19,10 @@ export class LoginComponent implements OnInit {
   loginForm: FormGroup;
   matcher: ErrorStateMatcher = new MyErrorStateMatcher();
 
-  constructor(private fb: FormBuilder, private authenticationService: AuthenticationService) {
+  constructor(private fb: FormBuilder,
+              private authenticationService: AuthenticationService,
+              private setTitle
+              ) {
     this.loginForm = this.fb.group(
       {
         email: ['', [Validators.required]],
